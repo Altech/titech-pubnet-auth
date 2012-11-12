@@ -18,7 +18,11 @@ opt.on('-d','--daemon','Execute as a daemon.'){
   daemon = true
 }
 
-puts File.dirname(__FILE__)
+single = false
+opt.on('-s','--single','No loop. Use as single command.'){
+  single = true
+}
+
 configure = !File::exists?(File.expand_path('../config/private.yml', File.dirname(__FILE__)))
 opt.on('-c','--config','Set your username and password.'){
   configure = true
@@ -63,4 +67,5 @@ loop do
   ensure
     $stdout.flush
   end
+  break if single
 end
