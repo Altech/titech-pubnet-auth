@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+
+file = File.expand_path('titech-pubnet-auth', File.dirname(__FILE__))
+`#{file} -d 2>&1`

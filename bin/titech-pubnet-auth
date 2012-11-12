@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+require 'pry'
+
+$:.unshift File.expand_path('../lib', File.dirname(__FILE__))
+require 'titech_pubnet_auth'
+require 'optparse'
+
+opt = OptionParser.new
+
+interval = 3
+opt.on('-i','--interval=SECONDS','Specify the polling interval.[3]'){|v|
+  interval = v.to_i
+}
+
+daemon = false
+opt.on('-d','--daemon','Execute as a daemon.'){
+  daemon = true
+}
+
+puts File.dirname(__FILE__)
+configure = !File::exists?(File.expand_path('../config/private.yml', File.dirname(__FILE__)))
+opt.on('-c','--config','Set your username and password.'){
+  configure = true
+}
+
+opt.parse!(ARGV)
+
+if configure
+  puts 'Please type your username:'
+  username = gets.strip
+  system "stty -echo"
+  puts 'Please type your password (typing will be hidden):'
+  password = gets.strip
+  conf = {'private' =>
+    {
+      'username' => username,
+      'password' => password
+    }
+  }
+  f = File::open(File.expand_path('../config/private.yml', File.dirname(__FILE__)),'w'){|f|
+    f << conf.to_yaml
+  }
+  puts 'configured!'
+  exit!
+end
+
+if daemon
+  $stdout = File::open(File.expand_path('~/.titech_pubnet_auth.log'),'w')
+  Process.daemon
+end
+
+pubnet_auth = TitechPubnetAuth.new
+loop do
+  begin
+    mputs 'network_available?', pubnet_auth.network_available?
+    mputs 'is_connected?', pubnet_auth.is_connected? if pubnet_auth.network_available?
+    mputs 'auth', pubnet_auth.auth if pubnet_auth.network_available? and not pubnet_auth.is_connected?
+    print "\n"
+    sleep interval
+  rescue => e
+    p e
+  ensure
+    $stdout.flush
+  end
+end
