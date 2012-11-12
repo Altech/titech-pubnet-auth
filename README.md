@@ -22,7 +22,7 @@ gem のインストール
 
 	gem install titech-pubnet-auth
 
-ユーザー名、パスワードを設定
+最初に、ユーザー名、パスワードを設定
 
 	$ titech-pubnet-auth -c
 
@@ -30,9 +30,12 @@ gem のインストール
 
 	$ titech-pubnet-auth
 
+
 デーモンとして起動
 
 	$ titech-pubnet-auth -d
+
+その他、オプションは`$ titech-pubnet-auth -h`で。
 
 ### ログイン時に起動する方法（Mac OS X の場合）
 
