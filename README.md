@@ -2,9 +2,14 @@
 
 東工大の titech-pubnet の認証を自動で行なうための gem です。
 
-titech-pubnet の認証の仕様に依存しているため、仕様が変われば動かなくなるかもしれません。その時は update するかもしれません。
+Mac OS X Mountain Lion, Ruby1.9.3 で動作確認済みです。たぶん Ruby1.9 じゃないと動きません。
 
-- Mac OS X Mountain Lion, Ruby1.9.3 で動作確認済み
+titech-pubnet の認証の仕様に依存しているため、仕様が変われば動かなくなるかもしれません。その時は update するかもしれません。主に以下のようなものの内容に依存していると思います。
+
+- 認証ページのドメイン
+- 認証ページのフォーム
+- 認証ページのloginscript.js
+- titech-pubnet の HTTPプロキシ（config/proxy.ymlで再設定可）
 
 ## 使い方
 
@@ -29,7 +34,7 @@ gem のインストール
 
 	$ titech-pubnet-auth -d
 
-## ログイン時に毎回起動（Mac OS X Mountain Lion の場合）
+### ログイン時に起動する方法（Mac OS X の場合）
 
 色々あるけど以下が簡単。
 
@@ -38,5 +43,8 @@ gem のインストール
 
 ## TODO
 
+- 接続確認のサンプルサイト増やす
 - パスワードを暗号化して保管
   - 正しいやり方調べる
+- Logger
+- テスト
