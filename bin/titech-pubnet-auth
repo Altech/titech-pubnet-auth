@@ -62,7 +62,6 @@ error_notifier = ->(e){TerminalNotifier.notify(e.inspect,:title => 'Titech Punet
 pubnet_auth = TitechPubnetAuth.new
 loop do
   begin
-    no_such_method
     mputs 'network_available?', pubnet_auth.network_available?
     mputs 'is_connected?', pubnet_auth.is_connected? if pubnet_auth.network_available?
     mputs 'auth', pubnet_auth.auth and notifier.call if pubnet_auth.network_available? and not pubnet_auth.is_connected?
