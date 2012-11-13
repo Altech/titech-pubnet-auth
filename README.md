@@ -1,3 +1,4 @@
+# Titech-Pubnet-Auth
 ## これはなに？
 
 東工大の titech-pubnet の認証を自動で行なうための gem です。
@@ -44,16 +45,5 @@ gem のインストール [^1]
 
 1. 「システム環境設定」→「ユーザとグループ」→「ログイン項目」に起動スクリプト`titech-pubnet-auth-daemon`を追加（`$ which titech-pubnet-auth-daemon`とかで場所を調べて、Finder上で⌘gでパス指定して移動できる）。
 2. （デフォルトだとプロセス終了時にターミナル.appが閉じない。これが煩わしい場合、）ターミナルを起動して、「環境設定」→「設定タブ」→「シェル」で、「シェルの終了時」の動作を「ウィンドウを閉じる」にする。
-
-## TODO
-
-- ライセンス明示
-- 連絡先明示
-- 接続確認のサンプル増やしたい
-- Notification Center 使う
-- パスワードを暗号化して保管
-  - 正しいやり方調べる
-- Logger
-- テスト
 
 [^1]: 依存している gem の一つである nokogiri（XMLパーサー）が native extension を使っていて必要なものが無いと install で失敗するかも。http://nokogiri.org/tutorials/installing_nokogiri.html を参照。
