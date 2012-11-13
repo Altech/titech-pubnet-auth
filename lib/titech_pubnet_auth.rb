@@ -15,6 +15,7 @@ class TitechPubnetAuth
   
   HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
   OPEN_TIMEOUT = 5
+  INTERVAL = 2
 
   def initialize
     @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
