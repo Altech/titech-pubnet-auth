@@ -9,5 +9,6 @@ module Kernel
   def mputs(tag,msg)
     s = Time.now.strftime("%Y-%m-%d %H:%M:%S").green + "\t" + caller.first[/([^:]*):/,1].split('/').last.blue + "\t" + tag + "：" + msg.to_s
     puts(s)
+    return msg
   end
 end
