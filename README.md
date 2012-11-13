@@ -12,6 +12,8 @@ titech-pubnet の認証の仕様に依存しているため、仕様が変われ
 - 認証ページのloginscript.js
 - titech-pubnet の HTTPプロキシ
 
+![](capture.png)
+
 ## 使い方
 
 参考：Ruby1.9 のインストール（Mac OS Xの場合）。
