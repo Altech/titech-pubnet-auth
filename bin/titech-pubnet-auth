@@ -29,6 +29,7 @@ opt.on('-c','--config','Set your username and password.'){
 
 opt.parse!(ARGV)
 
+
 if configure
   puts 'Please type your username:'
   username = gets.strip
@@ -51,13 +52,13 @@ if daemon
   Process.daemon
 end
 
+
 pubnet_auth = TitechPubnetAuth.new
 loop do
   begin
     mputs 'network_available?', pubnet_auth.network_available?
     mputs 'is_connected?', pubnet_auth.is_connected? if pubnet_auth.network_available?
     mputs 'auth', pubnet_auth.auth if pubnet_auth.network_available? and not pubnet_auth.is_connected?
-    
   rescue => e
     p e
   ensure

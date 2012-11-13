@@ -18,15 +18,14 @@ class TitechPubnetAuth
   INTERVAL = 2
 
   def initialize
-    @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
-
     @agent, @agent_with_proxy = Mechanize.new, Mechanize.new
     [@agent,@agent_with_proxy].each{|agent|
       agent.follow_meta_refresh = true
       agent.open_timeout = OPEN_TIMEOUT
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
-    
+
+    @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
   end
 
   def auth
@@ -45,7 +44,6 @@ class TitechPubnetAuth
 
     return is_connected?
   end
-
 
   def is_connected?
     return @agent_with_proxy.get(SAMPLE_URI).uri.hostname == SAMPLE_URI.hostname

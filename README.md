@@ -31,7 +31,6 @@ gem のインストール [^1]
 
 	$ titech-pubnet-auth
 
-
 デーモンとして起動
 
 	$ titech-pubnet-auth -d
