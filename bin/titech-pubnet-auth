@@ -8,8 +8,6 @@ require 'titech_pubnet_auth'
 require 'optparse'
 require 'terminal-notifier' if OS_X
 
-notifier = ->{TerminalNotifier.notify(nil,:title => 'Titech Punet Auth',:subtitle => 'Connected!') if OS_X}
-
 opt = OptionParser.new
 
 interval = TitechPubnetAuth::INTERVAL
@@ -57,14 +55,23 @@ if daemon
   Process.daemon
 end
 
+
+notifier = ->{TerminalNotifier.notify(nil,:title => 'Titech Punet Auth', :subtitle => 'Connected!') if OS_X}
+error_notifier = ->(e){TerminalNotifier.notify(e.inspect,:title => 'Titech Punet Auth',:subtitle => 'Caught an unexpected error!') if OS_X}
+
 pubnet_auth = TitechPubnetAuth.new
 loop do
   begin
+    no_such_method
     mputs 'network_available?', pubnet_auth.network_available?
     mputs 'is_connected?', pubnet_auth.is_connected? if pubnet_auth.network_available?
     mputs 'auth', pubnet_auth.auth and notifier.call if pubnet_auth.network_available? and not pubnet_auth.is_connected?
   rescue => e
-    p e
+    mputs 'unexpected error', e.class and error_notifier.call(e)
+    puts "  == Message =="
+    puts "  #{e.message}"
+    puts "  == Stack Trace =="
+    puts e.backtrace.map{|l| "  #{l}"}.join("\n")
   ensure
     print "\n"
     $stdout.flush
