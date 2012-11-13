@@ -12,17 +12,20 @@ class TitechPubnetAuth
   BASE_DIR = File.expand_path('..',File.dirname(__FILE__))
 
   SAMPLE_URI = URI.parse('http://github.com')
+  
+  HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
+  OPEN_TIMEOUT = 5
 
   def initialize
+    @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
+
     @agent, @agent_with_proxy = Mechanize.new, Mechanize.new
     [@agent,@agent_with_proxy].each{|agent|
       agent.follow_meta_refresh = true
-      agent.open_timeout = 3
+      agent.open_timeout = OPEN_TIMEOUT
     }
-    proxy = YAML.load(File::open(File::expand_path('config/proxy.yml',BASE_DIR),'r'))['http_proxy']
-    @agent_with_proxy.set_proxy(proxy['ip'], proxy['port'])
+    @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
     
-    @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))['private']
   end
 
   def auth
@@ -45,8 +48,7 @@ class TitechPubnetAuth
 
   def is_connected?
     return @agent_with_proxy.get(SAMPLE_URI).uri.hostname == SAMPLE_URI.hostname
-  rescue
-    # retry without the proxy
+  rescue # retry without the proxy
     return @agent.get(SAMPLE_URI) == SAMPLE_URI.hostname
   end
 

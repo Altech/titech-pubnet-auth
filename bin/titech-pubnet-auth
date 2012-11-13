@@ -35,11 +35,9 @@ if configure
   system "stty -echo"
   puts 'Please type your password (typing will be hidden):'
   password = gets.strip
-  conf = {'private' =>
-    {
+  conf = {
       'username' => username,
       'password' => password
-    }
   }
   f = File::open(File.expand_path('../config/private.yml', File.dirname(__FILE__)),'w'){|f|
     f << conf.to_yaml
@@ -59,12 +57,13 @@ loop do
     mputs 'network_available?', pubnet_auth.network_available?
     mputs 'is_connected?', pubnet_auth.is_connected? if pubnet_auth.network_available?
     mputs 'auth', pubnet_auth.auth if pubnet_auth.network_available? and not pubnet_auth.is_connected?
-    print "\n"
-    sleep interval
+    
   rescue => e
     p e
   ensure
+    print "\n"
     $stdout.flush
+    sleep interval
   end
   break if single
 end
