@@ -19,5 +19,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'colorize'
   gem.add_dependency 'mechanize', '~> 2.5'
+  gem.add_dependency 'terminal-notifier', '~> 1.4'
   
 end
