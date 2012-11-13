@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.name          = "titech-pubnet-auth"
   gem.require_paths = ["lib"]
-  gem.version       = "0.1.3"
+  gem.version       = "0.1.4"
 
   gem.add_dependency 'colorize'
   gem.add_dependency 'mechanize', '~> 2.5'
