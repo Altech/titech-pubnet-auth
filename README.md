@@ -12,7 +12,7 @@ titech-pubnet の認証の仕様に依存しているため、仕様が変われ
 - 認証ページのloginscript.js
 - titech-pubnet の HTTPプロキシ
 
-![](capture.png)
+![](titech-pubnet-auth/master/capture.png)
 
 ## 使い方
 
