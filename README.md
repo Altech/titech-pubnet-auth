@@ -4,7 +4,7 @@
 
 Mac OS X Mountain Lion, Ruby1.9.3 で動作確認済みです。たぶん Ruby1.9 じゃないと動きません。
 
-titech-pubnet の認証の仕様に依存しているため、仕様が変われば動かなくなるかもしれません。その時は update するかもしれません。主に以下のようなものの内容に依存していると思います。
+titech-pubnet の認証の仕様に依存しているため、仕様が変われば動かなくなるかもしれません。その時はこの gem をバージョンアップして対応するかもしれません。主に以下のようなものの内容に依存していると思います。
 
 - 認証ページのドメイン
 - 認証ページのフォーム
@@ -18,9 +18,9 @@ titech-pubnet の認証の仕様に依存しているため、仕様が変われ
 	$ sudo port install ruby19 # MacPortsを使うなら
 	$ brew install ruby # Homebrewを使うなら
 
-gem のインストール
+gem のインストール [^1]
 
-	gem install titech-pubnet-auth
+	$ gem install titech-pubnet-auth
 
 最初に、ユーザー名、パスワードを設定
 
@@ -40,15 +40,20 @@ gem のインストール
 
 ### ログイン時に起動する方法（Mac OS X の場合）
 
-色々あるけど以下が簡単。
+色々あるけど以下だとほぼGUIで完結する。
 
-1. 「システム環境設定」→「ユーザとグループ」→「ログイン項目」に起動スクリプト`titech-pubnet-auth-daemon`を追加。
-2. （デフォルトだとプロセス終了時にターミナル.appが閉じない。これが煩わしい場合は、）ターミナルを起動して、「環境設定」→「設定タブ」→「シェル」で、「シェルの終了時」の動作を「ウィンドウを閉じる」にする。
+1. 「システム環境設定」→「ユーザとグループ」→「ログイン項目」に起動スクリプト`titech-pubnet-auth-daemon`を追加（`$ which titech-pubnet-auth-daemon`とかで場所を調べて、Finder上で⌘gでパス指定して移動できる）。
+2. （デフォルトだとプロセス終了時にターミナル.appが閉じない。これが煩わしい場合、）ターミナルを起動して、「環境設定」→「設定タブ」→「シェル」で、「シェルの終了時」の動作を「ウィンドウを閉じる」にする。
 
 ## TODO
 
-- 接続確認のサンプルサイト増やす
+- ライセンス明示
+- 連絡先明示
+- 接続確認のサンプル増やしたい
+- Notification Center 使う
 - パスワードを暗号化して保管
   - 正しいやり方調べる
 - Logger
 - テスト
+
+[^1]: 依存している gem の一つである nokogiri（XMLパーサー）が native extension を使っていて必要なものが無いと install で失敗するかも。http://nokogiri.org/tutorials/installing_nokogiri.html を参照。
