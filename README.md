@@ -9,7 +9,7 @@ titech-pubnet の認証の仕様に依存しているため、仕様が変われ
 - 認証ページのドメイン
 - 認証ページのフォーム
 - 認証ページのloginscript.js
-- titech-pubnet の HTTPプロキシ（config/proxy.ymlで再設定可）
+- titech-pubnet の HTTPプロキシ
 
 ## 使い方
 
