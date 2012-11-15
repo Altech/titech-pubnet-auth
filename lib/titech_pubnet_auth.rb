@@ -48,7 +48,7 @@ class TitechPubnetAuth
   def is_connected?(sample_uri = SAMPLE_URI.call)
     return @agent_with_proxy.get(sample_uri).uri.hostname == sample_uri.hostname
   rescue # retry without the proxy
-    return @agent.get(sample_uri) == sample_uri.hostname
+    return @agent.get(sample_uri).uri.hostname == sample_uri.hostname
   end
 
   def network_available?
