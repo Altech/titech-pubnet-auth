@@ -14,14 +14,12 @@ class TitechPubnetAuth
   SAMPLE_URI = ->{%w[www.titech.ac.jp github.com twitter.com].map{|uri| URI.parse("http://#{uri}")}[rand(3)]}
   
   HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
-  OPEN_TIMEOUT = 5
-  INTERVAL = 2
 
-  def initialize
+  def initialize(opt = {open_timeout: 3})
     @agent, @agent_with_proxy = Mechanize.new, Mechanize.new
     [@agent,@agent_with_proxy].each{|agent|
       agent.follow_meta_refresh = true
-      agent.open_timeout = OPEN_TIMEOUT
+      agent.open_timeout = opt[:open_timeout]
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
 

@@ -10,11 +10,11 @@ require 'terminal-notifier' if OS_X
 
 opt = OptionParser.new
 
-interval = TitechPubnetAuth::INTERVAL
+interval = 2
 opt.on('-i','--interval=SECONDS','Specify the polling interval.[3]'){|v|
   interval = v.to_i
 }
-
+        
 daemon = false
 opt.on('-d','--daemon','Execute as a daemon.'){
   daemon = true
