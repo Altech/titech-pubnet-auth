@@ -33,13 +33,13 @@ class TitechPubnetAuth
     auth_page = @agent.get(sample_uri)
     return false if auth_page.uri.hostname != 'wlanauth.noc.titech.ac.jp'
 
-    form = auth_page.form
-    form.buttonClicked = 4
-    form.redirect_url = sample_uri
-    form.username = @private['username']
-    form.password = @private['password']
-    form.submit
-
+    auth_page.form do |form|
+      form.buttonClicked = 4
+      form.redirect_url = sample_uri
+      form.username = @private['username']
+      form.password = @private['password']
+    end.submit
+    
     return is_connected?
   end
 
@@ -48,7 +48,7 @@ class TitechPubnetAuth
   rescue # retry without the proxy
     return @agent.get(sample_uri).uri.hostname == sample_uri.hostname
   end
-
+  
   def network_available?
     @agent.get('http://portal.titech.ac.jp')
     return true
