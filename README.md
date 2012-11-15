@@ -1,7 +1,7 @@
 # Titech-Pubnet-Auth
 ## これはなに？
 
-東工大の titech-pubnet の認証を自動で行なうための gem です。
+titech-pubnet の認証を自動で行なうための gem です。
 
 Mac OS X Mountain Lion, Ruby1.9.3 で動作確認済みです。たぶん Ruby1.9 じゃないと動きません。
 
@@ -13,6 +13,8 @@ titech-pubnet の認証の仕様に依存しているため、仕様が変われ
 - titech-pubnet の HTTPプロキシ
 
 ![](https://raw.github.com/Altech/titech-pubnet-auth/master/capture.png)
+
+titech-pubnet に接続すると自動で認証が行われる（デスクトップアラートは Mac のみ）。
 
 ## 使い方
 
