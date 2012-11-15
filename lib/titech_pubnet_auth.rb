@@ -11,7 +11,7 @@ require 'titech_pubnet_auth/extension'
 class TitechPubnetAuth
   BASE_DIR = File.expand_path('..',File.dirname(__FILE__))
 
-  SAMPLE_URI = URI.parse('http://github.com')
+  SAMPLE_URI = ->{%w[www.titech.ac.jp github.com twitter.com].map{|uri| URI.parse("http://#{uri}")}[rand(3)]}
   
   HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
   OPEN_TIMEOUT = 5
@@ -28,16 +28,16 @@ class TitechPubnetAuth
     @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
   end
 
-  def auth
+  def auth(sample_uri = SAMPLE_URI.call)
     return false if not network_available?
     return true if is_connected?
 
-    auth_page = @agent.get(SAMPLE_URI)
+    auth_page = @agent.get(sample_uri)
     return false if auth_page.uri.hostname != 'wlanauth.noc.titech.ac.jp'
 
     form = auth_page.form
     form.buttonClicked = 4
-    form.redirect_url = SAMPLE_URI
+    form.redirect_url = sample_uri
     form.username = @private['username']
     form.password = @private['password']
     form.submit
@@ -45,10 +45,10 @@ class TitechPubnetAuth
     return is_connected?
   end
 
-  def is_connected?
-    return @agent_with_proxy.get(SAMPLE_URI).uri.hostname == SAMPLE_URI.hostname
+  def is_connected?(sample_uri = SAMPLE_URI.call)
+    return @agent_with_proxy.get(sample_uri).uri.hostname == sample_uri.hostname
   rescue # retry without the proxy
-    return @agent.get(SAMPLE_URI) == SAMPLE_URI.hostname
+    return @agent.get(sample_uri) == sample_uri.hostname
   end
 
   def network_available?
