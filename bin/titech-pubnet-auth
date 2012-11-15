@@ -30,6 +30,11 @@ opt.on('-c','--config','Set your username and password.'){
   configure = true
 }
 
+debug = false
+opt.on('-dd','--debug','Debug-mode.'){
+  debug = true
+}
+
 opt.parse!(ARGV)
 
 
@@ -60,21 +65,32 @@ notifier = ->{TerminalNotifier.notify(nil,:title => 'Titech Punet Auth', :subtit
 error_notifier = ->(e){TerminalNotifier.notify(e.inspect,:title => 'Titech Punet Auth',:subtitle => 'Caught an unexpected error!') if OS_X}
 
 pubnet_auth = TitechPubnetAuth.new
-loop do
+retry_count = 0
+loop do |t|
   begin
-    mputs 'network_available?', pubnet_auth.network_available?
-    mputs 'is_connected?', pubnet_auth.is_connected? if pubnet_auth.network_available?
-    mputs 'auth', pubnet_auth.auth and notifier.call if pubnet_auth.network_available? and not pubnet_auth.is_connected?
+    if mputs 'network_available?', pubnet_auth.network_available? and
+      if not mputs 'is_connected?', pubnet_auth.is_connected?
+        if mputs 'auth', pubnet_auth.auth
+          notifier.call
+          retry_count = 0
+          pubnet_auth = TitechPubnetAuth.new(open_timeout: 3)
+        end
+      end
+    end
   rescue => e
-    mputs 'unexpected error', e.class and error_notifier.call(e)
+    mputs 'unexpected error', e.class
     puts "  == Message =="
     puts "  #{e.message}"
     puts "  == Stack Trace =="
     puts e.backtrace.map{|l| "  #{l}"}.join("\n")
+    error_notifier.call(e) if debug
+
+    pubnet_auth = TitechPubnetAuth.new(open_timeout: 10)
+    retry_count += 1
   ensure
     print "\n"
     $stdout.flush
-    sleep interval
+    sleep interval unless retry_count == 1
   end
   break if single
 end
