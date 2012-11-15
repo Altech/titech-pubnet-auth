@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.summary       = 'This gem provides automatic authentication for titech-pubnet.'
   gem.homepage      = 'http://for-titech.herokuapp.com'
   
-  gem.files = FileList['lib/**/*', 'bin/*', 'config/*', 'Rakefile', 'Gemfile', 'README.md', 'titech_pubnet_auth.gemspec'].to_a
+  gem.files = FileList['lib/**/*', 'bin/*', 'config/private.yml.example', 'Rakefile', 'Gemfile', 'README.md', 'titech_pubnet_auth.gemspec'].to_a
   
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.name          = "titech-pubnet-auth"
