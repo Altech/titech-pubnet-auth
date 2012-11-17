@@ -30,9 +30,6 @@ class TitechPubnetAuth
   # called if network_available? and not is_connected?
   #
   def auth(sample_uri = SAMPLE_URI.call)
-    return false if not network_available?
-    return true if is_connected?
-
     auth_page = @agent.get(sample_uri)
     return false if auth_page.uri.hostname != 'wlanauth.noc.titech.ac.jp'
 
