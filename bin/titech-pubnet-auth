@@ -68,7 +68,7 @@ pubnet_auth = TitechPubnetAuth.new
 retry_count = 0
 loop do |t|
   begin
-    if mputs 'network_available?', pubnet_auth.network_available? and
+    if mputs 'network_available?', pubnet_auth.network_available?
       if not mputs 'is_connected?', pubnet_auth.is_connected?
         if mputs 'auth', pubnet_auth.auth
           notifier.call

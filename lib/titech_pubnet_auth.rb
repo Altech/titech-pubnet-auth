@@ -26,6 +26,9 @@ class TitechPubnetAuth
     @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
   end
 
+  #
+  # called if network_available? and not is_connected?
+  #
   def auth(sample_uri = SAMPLE_URI.call)
     return false if not network_available?
     return true if is_connected?
@@ -43,12 +46,18 @@ class TitechPubnetAuth
     return is_connected?
   end
 
+  #
+  # called if network_available?
+  #
   def is_connected?(sample_uri = SAMPLE_URI.call)
     return @agent_with_proxy.get(sample_uri).uri.hostname == sample_uri.hostname
   rescue # retry without the proxy
     return @agent.get(sample_uri).uri.hostname == sample_uri.hostname
   end
-  
+
+  #
+  # note: titech-pubnet allows to access portal.titech.ac.jp without authentication.
+  #
   def network_available?
     @agent.get('http://portal.titech.ac.jp')
     return true
