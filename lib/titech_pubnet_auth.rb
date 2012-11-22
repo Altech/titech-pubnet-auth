@@ -55,11 +55,12 @@ class TitechPubnetAuth
   #
   # note: titech-pubnet allows to access portal.titech.ac.jp without authentication.
   #
-  def network_available?
+  def network_available?(sample_uri = SAMPLE_URI.call)
     @agent.get('http://portal.titech.ac.jp')
     return true
   rescue => e
-    return false
+    # check another website just to make sure
+    return @agent.get(sample_uri).uri.hostname == sample_uri.hostname
   end
 
 end
