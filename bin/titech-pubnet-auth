@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-OS_X = RbConfig::CONFIG["target_os"].downcase =~ /^darwin/
-
 $:.unshift File.expand_path('../lib', File.dirname(__FILE__))
 require 'titech_pubnet_auth'
 require 'optparse'
-require 'terminal-notifier' if OS_X
+require 'logger'
+
+include TitechPubnetAuth::BinRoutines
 
 opt = OptionParser.new
 
@@ -61,9 +61,6 @@ if daemon
 end
 
 
-notifier = ->{TerminalNotifier.notify(nil,:title => 'Titech Punet Auth', :subtitle => 'Connected!') if OS_X}
-error_notifier = ->(e){TerminalNotifier.notify(e.inspect,:title => 'Titech Punet Auth',:subtitle => 'Caught an unexpected error!') if OS_X}
-
 pubnet_auth = TitechPubnetAuth.new
 retry_count = 0
 loop do |t|
@@ -71,7 +68,7 @@ loop do |t|
     if mputs 'network_available?', pubnet_auth.network_available?
       if not mputs 'is_connected?', pubnet_auth.is_connected?
         if mputs 'auth', pubnet_auth.auth
-          notifier.call
+          notifier
           retry_count = 0
           pubnet_auth = TitechPubnetAuth.new(open_timeout: 3)
         end
@@ -83,7 +80,7 @@ loop do |t|
     puts "  #{e.message}"
     puts "  == Stack Trace =="
     puts e.backtrace.map{|l| "  #{l}"}.join("\n")
-    error_notifier.call(e) if debug
+    error_notifier(e) if debug
 
     pubnet_auth = TitechPubnetAuth.new(open_timeout: 10)
     retry_count += 1

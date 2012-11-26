@@ -5,7 +5,7 @@ require 'uri'
 require 'yaml'
 
 $:.unshift File.dirname(__FILE__)
-require 'titech_pubnet_auth/extension'
+require 'titech_pubnet_auth/bin_routines'
 
 
 class TitechPubnetAuth
