@@ -6,6 +6,7 @@ require 'yaml'
 
 $:.unshift File.dirname(__FILE__)
 require 'titech_pubnet_auth/bin_routines'
+require 'titech_pubnet_auth/extensions'
 
 
 class TitechPubnetAuth
@@ -39,7 +40,7 @@ class TitechPubnetAuth
       form.username = @private['username']
       form.password = @private['password']
     end.submit
-    
+
     return is_connected?
   end
 
@@ -47,19 +48,18 @@ class TitechPubnetAuth
   # called if network_available?
   #
   def is_connected?(sample_uri = SAMPLE_URI.call)
-    return @agent_with_proxy.get(sample_uri).uri.hostname == sample_uri.hostname
+    @agent_with_proxy.get(sample_uri).uri.hostname == sample_uri.hostname
   rescue # retry without the proxy
-    return @agent.get(sample_uri).uri.hostname == sample_uri.hostname
+    @agent.get(sample_uri).uri.hostname == sample_uri.hostname
   end
 
   #
   # note: titech-pubnet allows to access portal.titech.ac.jp without authentication.
   #
   def network_available?(sample_uri = SAMPLE_URI.call)
-    @agent.get('http://portal.titech.ac.jp')
-    return true
+    @agent.get('http://portal.titech.ac.jp').to_b
   rescue # check another website just to make sure
-    return @agent.get(sample_uri).uri.hostname == sample_uri.hostname
+    @agent.get(sample_uri).to_b rescue return false
   end
 
 end
