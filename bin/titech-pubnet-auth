@@ -4,9 +4,6 @@
 $:.unshift File.expand_path('../lib', File.dirname(__FILE__))
 require 'titech_pubnet_auth'
 require 'optparse'
-require 'logger'
-
-include TitechPubnetAuth::BinRoutines
 
 opt = OptionParser.new
 
@@ -60,6 +57,8 @@ if daemon
   Process.daemon
 end
 
+
+include TitechPubnetAuth::BinRoutines
 
 pubnet_auth = TitechPubnetAuth.new
 retry_count = 0
