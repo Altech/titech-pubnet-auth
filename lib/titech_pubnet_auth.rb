@@ -12,7 +12,7 @@ require 'titech_pubnet_auth/extensions'
 class TitechPubnetAuth
   BASE_DIR = File.expand_path('..',File.dirname(__FILE__))
 
-  SAMPLE_URI = ->{%w[www.titech.ac.jp github.com twitter.com].map{|uri| URI.parse("http://#{uri}")}[rand(3)]}
+  SAMPLE_URI = ->{%w[www.google.com twitter.com www.facebook.com mixi.jp www.amazon.co.jp www.wikipedia.org www.fc2.com www.yahoo.co.jp www.kakaku.com].map{|uri| URI.parse("http://#{uri}")}[rand(3)]}
   
   HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
 
@@ -24,6 +24,8 @@ class TitechPubnetAuth
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
 
+    require 'pry'
+    binding.pry
     @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
   end
 
