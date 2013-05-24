@@ -24,8 +24,6 @@ class TitechPubnetAuth
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
 
-    require 'pry'
-    binding.pry
     @private = YAML.load(File::open(File::expand_path('config/private.yml',BASE_DIR),'r'))
   end
 
