@@ -26,6 +26,7 @@ titech-pubnet に接続すると自動で認証が行われる（デスクトッ
 gem のインストール [^1]
 
 	$ gem install titech-pubnet-auth
+	$ gem install titech-pubnet-auth -r -p http://131.112.125.238:3128 # titech-pubnetでインストールするなら
 
 最初に、ユーザー名、パスワードを設定
 
