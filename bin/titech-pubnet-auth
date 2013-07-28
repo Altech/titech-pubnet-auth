@@ -61,15 +61,13 @@ end
 include TitechPubnetAuth::BinRoutines
 
 pubnet_auth = TitechPubnetAuth.new
-retry_count = 0
 loop do |t|
   begin
     if mputs 'network_available?', pubnet_auth.network_available?
       if not mputs 'is_connected?', pubnet_auth.is_connected?
         if mputs 'auth', pubnet_auth.auth
           notifier
-          retry_count = 0
-          pubnet_auth = TitechPubnetAuth.new(open_timeout: 3)
+          pubnet_auth = TitechPubnetAuth.new(open_timeout: 5)
         end
       end
     end
@@ -82,11 +80,9 @@ loop do |t|
     error_notifier(e) if debug
 
     pubnet_auth = TitechPubnetAuth.new(open_timeout: 10)
-    retry_count += 1
   ensure
-    print "\n"
-    $stdout.flush
-    sleep interval unless retry_count == 1
+    print "\n"; $stdout.flush
+    sleep interval
   end
   break if single
 end
