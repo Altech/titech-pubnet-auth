@@ -7,7 +7,7 @@ require 'optparse'
 
 opt = OptionParser.new
 
-interval = 2
+interval = 3
 opt.on('-i','--interval=SECONDS',"Specify the polling interval.[#{interval}]"){|v|
   interval = v.to_i
 }
