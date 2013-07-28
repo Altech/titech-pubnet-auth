@@ -8,11 +8,11 @@ class TitechPubnetAuth
       require 'terminal-notifier'
       
       def notifier
-        TerminalNotifier.notify(nil,:title => 'Titech Punet Auth', :subtitle => 'Connected!') 
+        TerminalNotifier.notify(nil,:title => 'Titech Pubnet Auth', :subtitle => 'Connected!') 
       end
 
       def error_notifier(e)
-        TerminalNotifier.notify(e.inspect,:title => 'Titech Punet Auth',:subtitle => 'Caught an unexpected error!')
+        TerminalNotifier.notify(e.inspect,:title => 'Titech Pubnet Auth',:subtitle => 'Caught an unexpected error!')
       end
 
     else
