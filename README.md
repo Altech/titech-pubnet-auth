@@ -3,8 +3,6 @@
 
 titech-pubnet の認証を自動で行なうための gem です。
 
-Mac OS X Mountain Lion, Ruby1.9.3 で動作確認済みです。たぶん Ruby1.9 じゃないと動きません。
-
 titech-pubnet の認証の仕様に依存しているため、仕様が変われば動かなくなるかもしれません。主に以下のようなものの内容に依存していると思います。
 
 - 認証ページのドメイン
@@ -18,15 +16,13 @@ titech-pubnet に接続すると自動で認証が行われる（デスクトッ
 
 ## 使い方
 
-参考：Ruby1.9 のインストール（Mac OS Xの場合）。
+参考：Ruby のインストール（Mac OS Xの場合）。
 
-	$ sudo port install ruby19 # MacPortsを使うなら
-	$ brew install ruby # Homebrewを使うなら
+	$ brew install ruby # Homebrewを使う場合
 
-gem のインストール [^1]
+gem のインストール
 
-	$ gem install titech-pubnet-auth
-	$ gem install titech-pubnet-auth -r -p http://131.112.125.238:3128 # titech-pubnetでインストールするなら
+	$ gem install titech-pubnet-auth # titech-pubnet 経由でインストールするなら引数として " -r -p http://131.112.125.238:3128" を追加
 
 最初に、ユーザー名、パスワードを設定
 
@@ -45,9 +41,7 @@ gem のインストール [^1]
 
 ### ログイン時に起動する方法（Mac OS X の場合）
 
-色々あるけど以下だとほぼGUIで完結する。
+色々あるけど以下だとほぼGUIで完結する。CUIなら launch など。
 
 1. 「システム環境設定」→「ユーザとグループ」→「ログイン項目」に起動スクリプト`titech-pubnet-auth-daemon`を追加（`$ which titech-pubnet-auth-daemon`とかで場所を調べて、Finder上で⌘gでパス指定して移動できる）。
 2. （デフォルトだとプロセス終了時にターミナル.appが閉じない。これが煩わしい場合、）ターミナルを起動して、「環境設定」→「設定タブ」→「シェル」で、「シェルの終了時」の動作を「ウィンドウを閉じる」にする。
-
-[^1]: 依存している gem の一つである nokogiri（XMLパーサー）が native extension を使っていて必要なものが無いと install で失敗するかも。http://nokogiri.org/tutorials/installing_nokogiri.html を参照。
