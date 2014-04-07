@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'rdoc/task'
 require "bundler/gem_tasks"
+require 'rspec/core/rake_task'
 
 BASE_DIR = File.dirname(__FILE__)
 
@@ -9,3 +10,5 @@ require 'yard/rake/yardoc_task'
 YARD::Rake::YardocTask.new do |t|
   t.files   = ['README.md','lib/**/*.rb']
 end
+
+RSpec::Core::RakeTask.new(:spec)

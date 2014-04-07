@@ -21,7 +21,7 @@ class TitechPubnetAuth
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
 
-    @private = YAML.load_file((__dir__ || File.dirname(__FILE__)) + '/../config/private.yml')
+    @private = opt[:private] || YAML.load_file((__dir__ || File.dirname(__FILE__)) + '/../config/private.yml')
   end
 
   #
