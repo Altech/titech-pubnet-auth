@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TitechPubnetAuth do
 
   before do
-    @auth = TitechPubnetAuth.new
+    @auth = TitechPubnetAuth.new(private: {username: 'foo', password: 'bar'})
 
     example_auth_page = <<-EOF
       <!doctype html>
