@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Altech/titech-pubnet-auth.svg?branch=master)](https://travis-ci.org/Altech/titech-pubnet-auth)
+
 # Titech-Pubnet-Auth
 ## これはなに？
 
