@@ -4,7 +4,7 @@ require 'mechanize'
 require 'uri'
 require 'yaml'
 
-$:.unshift(__dir__ || File.dirname(__FILE__))
+$:.unshift(File.dirname(__FILE__))
 require 'titech_pubnet_auth/bin_routines'
 require 'titech_pubnet_auth/extensions'
 
@@ -13,7 +13,8 @@ class TitechPubnetAuth
   SAMPLE_URI = URI "http://example.org"
   HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
 
-  def initialize(opt = {open_timeout: 5})
+  def initialize(opt)
+    opt = {open_timeout: 5}.merge(opt)
     @agent, @agent_with_proxy = Mechanize.new, Mechanize.new
     [@agent, @agent_with_proxy].each{|agent|
       agent.follow_meta_refresh = true
@@ -21,7 +22,7 @@ class TitechPubnetAuth
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
 
-    @private = opt[:private] || YAML.load_file((__dir__ || File.dirname(__FILE__)) + '/../config/private.yml')
+    @private = opt[:private] || YAML.load_file(File.dirname(__FILE__) + '/../config/private.yml')
   end
 
   #
@@ -40,7 +41,7 @@ class TitechPubnetAuth
 
     return is_connected?
   end
-  
+
   #
   # called if network_available?
   #

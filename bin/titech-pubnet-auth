@@ -11,7 +11,7 @@ interval = 3
 opt.on('-i','--interval=SECONDS',"Specify the polling interval.[#{interval}]"){|v|
   interval = v.to_i
 }
-        
+
 daemon = false
 opt.on('-d','--daemon','Execute as a daemon.'){
   daemon = true
@@ -85,4 +85,4 @@ loop do |t|
     sleep interval
   end
   break if single
-end
+end 
