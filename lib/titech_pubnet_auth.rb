@@ -13,7 +13,7 @@ class TitechPubnetAuth
   SAMPLE_URI = URI "http://example.org"
   HTTP_PROXY = {ip: '131.112.125.238', port: 3128}
 
-  def initialize(opt)
+  def initialize(opt = {})
     opt = {open_timeout: 5}.merge(opt)
     @agent, @agent_with_proxy = Mechanize.new, Mechanize.new
     [@agent, @agent_with_proxy].each{|agent|
