@@ -7,7 +7,7 @@ require 'yaml'
 $:.unshift(File.dirname(__FILE__))
 require 'titech_pubnet_auth/bin_routines'
 require 'titech_pubnet_auth/extensions'
-
+require 'titech_pubnet_auth/config'
 
 class TitechPubnetAuth
   SAMPLE_URI = URI "http://example.org"
@@ -22,7 +22,8 @@ class TitechPubnetAuth
     }
     @agent_with_proxy.set_proxy(HTTP_PROXY[:ip], HTTP_PROXY[:port])
 
-    @private = opt[:private] || YAML.load_file(File.dirname(__FILE__) + '/../config/private.yml')
+    @config = opt[:config] || TitechPubnetAuth::Config.get
+    fail "config not found" unless @config
   end
 
   #
@@ -35,8 +36,8 @@ class TitechPubnetAuth
     auth_page.form do |form|
       form.buttonClicked = 4
       form.redirect_url = sample_uri
-      form.username = @private['username']
-      form.password = @private['password']
+      form.username = @config.username
+      form.password = @config.password
     end.submit
 
     return is_connected?
