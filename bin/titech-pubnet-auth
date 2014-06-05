@@ -22,9 +22,9 @@ opt.on('-s','--single','No loop. Use as single command.'){
   single = true
 }
 
-configure = !File::exists?(File.expand_path('../config/private.yml', File.dirname(__FILE__)))
+reconfig = false
 opt.on('-c','--config','Set your username and password.'){
-  configure = true
+  reconfig = true
 }
 
 debug = false
@@ -35,19 +35,14 @@ opt.on('--debug','Debug-mode.'){
 opt.parse!(ARGV)
 
 
-if configure
+if !TitechPubnetAuth::Config.get || reconfig
+  config = TitechPubnetAuth::Config.new
   puts 'Please type your username:'
-  username = gets.strip
+  config.username = gets.strip
   system "stty -echo"
   puts 'Please type your password (typing will be hidden):'
-  password = gets.strip
-  conf = {
-      'username' => username,
-      'password' => password
-  }
-  File::open(File.expand_path('../config/private.yml', File.dirname(__FILE__)),'w'){|f|
-    f << conf.to_yaml
-  }
+  config.password = gets.strip
+  config.save!
   puts 'configured!'
   exit!
 end
