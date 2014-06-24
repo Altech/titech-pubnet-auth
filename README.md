@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Altech/titech-pubnet-auth.svg?branch=master)](https://travis-ci.org/Altech/titech-pubnet-auth)
+[![Gem Version](https://badge.fury.io/rb/titech-pubnet-auth.svg)](http://badge.fury.io/rb/titech-pubnet-auth)
 
 # Titech-Pubnet-Auth
 ## これはなに？
